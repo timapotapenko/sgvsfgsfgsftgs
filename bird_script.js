@@ -51,7 +51,7 @@ const setup = () => {
   pipes = Array(3).fill().map((a, i) => [canvas.width + (i * (pipeGap + pipeWidth)), pipeLoc()]);
 }
 
-const render = () => {
+const render = (timestamp) => {
   // make the pipe and bird moving 
   index++;
 
@@ -145,6 +145,9 @@ const render = () => {
     fText.y -= 1;
     fText.opacity -= 0.01;
   });
+
+  // tell the browser to perform anim
+  requestAnimationFrame(render);
 }
 
 // launch setup
@@ -174,7 +177,3 @@ backButton.addEventListener('click', (e) => {
   e.stopPropagation(); // Prevent the click event from propagating to the window
   backButtonClicked = true;
 });
-
-// Set interval for fixed frame rate
-const frameRate = 1000 / 60; // 60 FPS
-setInterval(render, frameRate);
