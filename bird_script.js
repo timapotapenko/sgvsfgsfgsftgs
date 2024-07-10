@@ -155,17 +155,17 @@ setup();
 img.onload = render;
 
 // start game
-document.addEventListener('click', () => {
+const startJump = () => {
   if (!gamePlaying) {
     gamePlaying = true;
-    flight = jump; // start jump immediately on click
-  }
-});
-window.onclick = () => {
-  if (gamePlaying) {
+    flight = jump; // start jump immediately on touch
+  } else if (gamePlaying) {
     flight = jump;
   }
-};
+}
+
+document.addEventListener('touchstart', startJump);
+document.addEventListener('mousedown', startJump);
 
 // Prevent double-click zoom
 window.addEventListener('dblclick', (e) => {
