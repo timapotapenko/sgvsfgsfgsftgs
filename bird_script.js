@@ -18,7 +18,7 @@ img.src = "https://i.ibb.co/Q9yv5Jk/flappy-bird-set.png";
 // general settings
 let gamePlaying = false;
 const gravity = .5;
-const speed = 5.2;
+const speed = 5.2; // Set a fixed speed
 const size = [51, 36];
 const jump = -12.5;
 const cTenth = (canvas.width / 10);
@@ -33,7 +33,6 @@ let index = 0,
 // new variables
 let money_collected = 0;
 let money_column = 100000;
-let tries = 999;
 let floatingText = [];
 
 // pipe settings
@@ -87,7 +86,6 @@ const render = () => {
       // if hit the pipe, end
       if ([pipe[0] <= cTenth + size[0], pipe[0] + pipeWidth >= cTenth, pipe[1] > flyHeight || pipe[1] + pipeGap < flyHeight + size[1]].every(elem => elem)) {
         gamePlaying = false;
-        tries--; // reduce tries when the game is over
         setup();
       }
 
@@ -110,7 +108,7 @@ const render = () => {
 
     ctx.font = "bold 20px 'Press Start 2P', cursive";
     ctx.fillStyle = "black";
-    const text = tries > 0 ? `Play(${tries})` : 'Wait for new tries';
+    const text = 'Play';
     const textWidth = ctx.measureText(text).width;
     const x = (canvas.width / 2) - (textWidth / 2);
     const y = canvas.height * 0.7; // 30% from the bottom
@@ -147,9 +145,6 @@ const render = () => {
     fText.y -= 1;
     fText.opacity -= 0.01;
   });
-
-  // tell the browser to perform anim
-  window.requestAnimationFrame(render);
 }
 
 // launch setup
@@ -158,13 +153,13 @@ img.onload = render;
 
 // start game
 document.addEventListener('click', () => {
-  if (tries > 0 && !gamePlaying) {
+  if (!gamePlaying) {
     gamePlaying = true;
     flight = jump; // start jump immediately on click
   }
 });
 window.onclick = () => {
-  if (tries > 0 && gamePlaying) {
+  if (gamePlaying) {
     flight = jump;
   }
 };
@@ -179,3 +174,7 @@ backButton.addEventListener('click', (e) => {
   e.stopPropagation(); // Prevent the click event from propagating to the window
   backButtonClicked = true;
 });
+
+// Set interval for fixed frame rate
+const frameRate = 1000 / 60; // 60 FPS
+setInterval(render, frameRate);
