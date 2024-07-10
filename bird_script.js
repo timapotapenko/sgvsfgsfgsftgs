@@ -20,7 +20,7 @@ let gamePlaying = false;
 const gravity = .5;
 const speed = 5.2; // Set a fixed speed
 const size = [51, 36];
-const jump = -12.5;
+const jump = -8.5;
 const cTenth = (canvas.width / 10);
 
 let index = 0,
